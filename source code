@@ -1,0 +1,83 @@
+# PAT Compress Source Code
+
+import re
+
+#######################################
+######空白RPT部分改动为RPT1#########
+#######################################	
+# 读取文件
+with open('指定要压缩的文件路径和文件名', 'r') as file:
+    lines = file.readlines()
+	
+# 定义一个正则表达式，用于查找 "TS2" 后没有 "," 的行
+addpat = r"TS2(?!,)"
+
+# 处理每一行，查找 "TS2" 后没有 "," 的行，并添加 ",1 "
+new_lines = []
+
+for line in lines:
+    if re.search(addpat, line):
+        new_lines.append(re.sub(addpat, "TS2,RPT 1 ", line))
+    else:
+        new_lines.append(line)
+# 将处理后的内容写回到文件
+with open('指定一个新的输出文件的路径和文件名', 'w') as file:   ##此输出以下称“输出文件”
+    file.writelines(new_lines)
+
+
+
+#######################################
+#######PAT压缩，并累计RPT次数#######
+#######################################
+# 读取文件
+with open('输出文件', 'r') as file:
+    lines = file.readlines()
+
+processed_lines = {}
+for line in lines:
+    line_parts = line.strip().split(',')
+    key = line_parts[0].strip()
+    value = int(re.search(r'\d+', line_parts[1]).group())
+    if key in processed_lines:
+        processed_lines[key] += value
+    else:
+        processed_lines[key] = value
+
+# 写入文件
+with open('输出文件', 'w') as file:
+    for key, value in processed_lines.items():
+        file.write(f'{key}, {value}\n')
+
+
+
+#######################################
+###将累计次数输出为标准的RPT格式#####
+#######################################
+# 读取文件
+with open('输出文件', 'r+') as file:
+    lines = file.readlines()
+
+# 对每一行进行处理
+    for index, line in enumerate(lines):
+     rpt_line = re.sub(r',\s*', ',RPT ', line)
+     lines[index] = rpt_line
+
+# 将处理后的内容写回到文件
+with open('输出文件', 'w') as file:
+    for line in lines:
+     file.write(line)
+
+
+
+#################################################
+####为上述生成的输出结果的每一行末尾加上“ ；”####
+#################################################
+with open('输出文件', 'r') as file:
+    lines = file.readlines()
+
+# 对每一行进行处理，删除行尾的空格和换行符，然后添加分号和换行符
+processed_lines = [line.strip() + ' ;\n' for line in lines]
+
+# 将处理后的内容写回到文件
+with open('输出文件', 'w') as file:
+    file.writelines(processed_lines)
