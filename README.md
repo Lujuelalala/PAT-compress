@@ -1,3 +1,3 @@
 # PAT-compress
-您可以使用此 compress script 来对您的 pattern 文件进行有效地压缩，从而解放出更多的资源以及提升工作效率。在运行此脚本时，需保证您的 python 解释器有 re（正则表达式）的依赖库。
-在脚本中添加您想要压缩的原始文件路径和文件名，在运行结束之后将会生成新的文件以保存压缩后的内容。例如原始文件'D:\\test.txt'和输出文件'D:\\output.txt'
+You can use this compress script to compress your pattern files efficiently, freeing up more resources and improving productivity. When running this script, make sure that your python interpreter has a dependency on re.
+Add the original file path and file name you want to compress to the script, and a new file will be generated to save the compressed content at the end of the run. For example, the original file 'D:test.txt' and the output file 'D:output.txt'
