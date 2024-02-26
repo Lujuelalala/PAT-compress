@@ -8,7 +8,7 @@ def remove_comments(input_file, output_file):
     modified_lines = []
     for line in lines:
         if '//' in line:
-            modified_line = line.split('//')[0] + '\n'
+            modified_line = line.split(';')[0] + '\n'
             modified_lines.append(modified_line)
         else:
             modified_lines.append(line)
